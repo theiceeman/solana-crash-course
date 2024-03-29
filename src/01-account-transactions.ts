@@ -1,5 +1,6 @@
 // ACCOUNTS & TRANSACTIONS
 
+// @ts-ignore
 const web3 = require("@solana/web3.js");
 const base58 = require("bs58");
 require("dotenv").config()
@@ -13,7 +14,7 @@ const connection = new web3.Connection(CLUSTER_URL, "single");
 
 
 
-async function main() {
+async function _main() {
     let connection = new web3.Connection(web3.clusterApiUrl("devnet"), "confirmed");
     // slot is a period of time during which transactions are processed and blocks are produced.
     let slot = await connection.getSlot();
@@ -22,7 +23,7 @@ async function main() {
     // let fees = await connection.getFeeForMessage(base64String);
     // console.log(fees)
 }
-// main()
+// _main()
 
 
 
@@ -44,17 +45,18 @@ const secretKey = new Uint8Array([133, 14, 138, 246, 78, 103, 209, 23, 23, 18, 1
  * convert secret key to readable base58.
  * @param {Uint8Array} secretKey
  */
-function convertToBs58(secretKey) {
+function convertToBs58(secretKey: Uint8Array) {
     const base58String = base58.encode(Buffer.from(secretKey));
     console.log({ base58String })
 }
+convertToBs58(secretKey);
 
 
 /**
  * derive public key from secret key.
  * @param {Uint8Array} secretKey
  */
-function derivePublicKey(secretKey) {
+function derivePublicKey(secretKey: any) {
     let derivedSecretkey = web3.Keypair.fromSecretKey(Buffer.from(secretKey, 'base64'))
     return derivedSecretkey.publicKey.toBase58();
 }
@@ -65,7 +67,7 @@ function derivePublicKey(secretKey) {
  * derive signer keypair key from secret key.
  * @param {Uint8Array} secretKey
  */
-function deriveKeyPair(secretKey) {
+function deriveKeyPair(secretKey:any) {
     return web3.Keypair.fromSecretKey(Buffer.from(secretKey, 'base64'))
 }
 // generateKeyPair()
@@ -76,7 +78,7 @@ function deriveKeyPair(secretKey) {
  * @param {string} base58String 
  * @returns 
  */
-function convertBs58ToUintArray(base58String) {
+function convertBs58ToUintArray(base58String:string) {
     return Uint8Array.from(base58.decode(base58String));
 }
 // convertBs58ToUintArray(process.env.PRV_KEY); return;
@@ -84,7 +86,7 @@ function convertBs58ToUintArray(base58String) {
 
 
 
-async function createAccount(payer, account) {
+async function createAccount(payer:any, account:any) {
     const space = 0;
     const lamports = await connection.getMinimumBalanceForRentExemption(space);
 
@@ -97,7 +99,7 @@ async function createAccount(payer, account) {
     });
 
     // get the latest recent blockhash
-    let recentBlockhash = await connection.getLatestBlockhash().then(res => res.blockhash);
+    let recentBlockhash = await connection.getLatestBlockhash().then((res:any) => res.blockhash);
 
     // create a message (v0)
     const message = new web3.TransactionMessage({
@@ -123,5 +125,5 @@ async function createAccount(payer, account) {
 
 
 module.exports = {
-    generateKeyPair, deriveKeyPair, convertBs58ToUintArray,
+    generateKeyPair, deriveKeyPair, convertBs58ToUintArray, convertToBs58
 }
