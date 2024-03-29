@@ -2,8 +2,8 @@ const { createAndMint, TokenStandard } = require("@metaplex-foundation/mpl-token
 const { createSignerFromKeypair, generateSigner, signerIdentity, percentAmount } = require("@metaplex-foundation/umi");
 const { createWeb3JsEddsa } = require('@metaplex-foundation/umi-eddsa-web3js');
 const { createUmi } = require('@metaplex-foundation/umi-bundle-defaults');
-const web3 = require("@solana/web3.js");
-const { convertBs58ToUintArray } = require("./01-account-transactions");
+// const web3 = require("@solana/web3.js");
+// const { convertBs58ToUintArray } = require("./01-account-transactions");
 const { mplCandyMachine } = require("@metaplex-foundation/mpl-candy-machine");
 const fs = require('fs')
 
@@ -11,6 +11,10 @@ const fs = require('fs')
 const umi = createUmi(process.env.RPC_URL ?? web3.clusterApiUrl("devnet"));
 const eddsa = createWeb3JsEddsa();
 
+if (!process.env.OWNER_PRV_KEY) {
+    throw new Error('no private key!')
+
+}
 // Create a keypair from your private key
 const userWallet = eddsa.createKeypairFromSecretKey(convertBs58ToUintArray(process.env.OWNER_PRV_KEY))
 const userWalletSigner = createSignerFromKeypair(umi, userWallet);
