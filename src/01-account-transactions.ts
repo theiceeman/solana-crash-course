@@ -78,7 +78,7 @@ function deriveKeyPair(secretKey:any) {
  * @param {string} base58String 
  * @returns 
  */
-function convertBs58ToUintArray(base58String:string) {
+ export function convertBs58ToUintArray(base58String:string) {
     return Uint8Array.from(base58.decode(base58String));
 }
 // convertBs58ToUintArray(process.env.PRV_KEY); return;
@@ -124,6 +124,6 @@ async function createAccount(payer:any, account:any) {
 // createAccount(payerPubKey, account)
 
 
-module.exports = {
-    generateKeyPair, deriveKeyPair, convertBs58ToUintArray, convertToBs58
-}
+// module.exports = {
+//     generateKeyPair, deriveKeyPair, convertBs58ToUintArray, convertToBs58
+// }

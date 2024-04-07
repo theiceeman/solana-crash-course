@@ -1,9 +1,12 @@
+const { convertBs58ToUintArray } = require("./01-account-transactions");
+// @ts-ignore
+const web3 = require("@solana/web3.js");
+
 const { createAndMint, TokenStandard } = require("@metaplex-foundation/mpl-token-metadata");
 const { createSignerFromKeypair, generateSigner, signerIdentity, percentAmount } = require("@metaplex-foundation/umi");
 const { createWeb3JsEddsa } = require('@metaplex-foundation/umi-eddsa-web3js');
 const { createUmi } = require('@metaplex-foundation/umi-bundle-defaults');
-// const web3 = require("@solana/web3.js");
-// const { convertBs58ToUintArray } = require("./01-account-transactions");
+
 const { mplCandyMachine } = require("@metaplex-foundation/mpl-candy-machine");
 const fs = require('fs')
 
@@ -18,15 +21,15 @@ if (!process.env.OWNER_PRV_KEY) {
 // Create a keypair from your private key
 const userWallet = eddsa.createKeypairFromSecretKey(convertBs58ToUintArray(process.env.OWNER_PRV_KEY))
 const userWalletSigner = createSignerFromKeypair(umi, userWallet);
-
+// generateKeyPair()
 
 
 const metadata = {
-    name: "KELVIN",
-    symbol: "KVN",
-    description: "This is a short description...",
-    image: "https://www.paradigm.xyz/static/madrealities.png",
-    uri: "https://json.extendsclass.com/bin/3dd36031d9f6"
+    name: "QUANTUM",
+    symbol: "QUANT",
+    description: "shortest of descriptions...",
+    image: "https://www.paradigm.xyz/static/argent-logo-400x400.png",
+    uri: "https://json.extendsclass.com/bin/f0fd58a1e0cd"
 };
 
 const mint = generateSigner(umi);
@@ -49,3 +52,4 @@ createAndMint(umi, {
 }).sendAndConfirm(umi).then(() => {
     console.log("Successfully minted 1 million tokens (", mint.publicKey, ")");
 });
+
